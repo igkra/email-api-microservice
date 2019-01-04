@@ -50,6 +50,14 @@ app.listen(PORT);
 
 ## Setup nodemailer
 
+## Basic Auth
+
+It is always good to have some security on top of your microservice. So only allowed users can use the API.
+Lets add simple Basic Auth checker.
+
+`yarn add express-basic-auth`
+
+
 ## Deploy to Heroku
 
 Prerequisites: Heroku CLI and login
@@ -71,3 +79,4 @@ Get latest 200 lines from log
 
 Or stream logs
 `heroku logs --tail`
+

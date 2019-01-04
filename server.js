@@ -2,18 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
+const basicAuth = require('express-basic-auth');
+require('dotenv').config()
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-let env;
-
-if (process.env.NODE_ENV === 'production') {
-  env = process.env;
-} else {
-  env = require('./config.json');
-}
-
+const env = process.env;
 const auth = {
   auth: {
     api_key: env.MAILGUN_API_KEY,
@@ -34,18 +29,24 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.text());
 
+// Add Basic Auth
+app.use(basicAuth({
+  users: {
+    [env.BASIC_AUTH_USER]: env.BASIC_AUTH_PASSWORD
+  }
+}))
+
 app.listen(PORT);
 
 
 app.post('/email', (req, res) => {
-  let email = req.body.email;
-  let message = req.body.message;
-  let name = req.body.name;
+  const email = req.body.email;
+  const message = req.body.message;
 
   nodemailerMailgun.sendMail({
     from: 'santa@jullista.com',
     to: email,
-    subject: `Message from ${name}`,
+    subject: `You've got a Secret Santa`,
     html: `<h4>${message}</h4>`
   }, (err, info) => {
     if (err) {
