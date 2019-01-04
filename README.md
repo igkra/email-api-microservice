@@ -50,3 +50,24 @@ app.listen(PORT);
 
 ## Setup nodemailer
 
+## Deploy to Heroku
+
+Prerequisites: Heroku CLI and login
+
+Create new heroku app
+`heroku create`
+
+Set Mailgun envs
+`heroku config:set MAILGUN_DOMAIN=XXX`
+`heroku config:set MAILGUN_API_KEY=XXX`
+
+Deploy to heroku
+`git push heroku master`
+
+## Debug heroku
+
+Get latest 200 lines from log
+`heroku logs -n 200`
+
+Or stream logs
+`heroku logs --tail`
