@@ -3,12 +3,15 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
 const basicAuth = require('express-basic-auth');
+const cors = require('cors')
+
 require('dotenv').config()
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const env = process.env;
+
 const auth = {
   auth: {
     api_key: env.MAILGUN_API_KEY,
@@ -35,6 +38,8 @@ app.use(basicAuth({
     [env.BASIC_AUTH_USER]: env.BASIC_AUTH_PASSWORD
   }
 }))
+
+app.use(cors())
 
 app.listen(PORT);
 
