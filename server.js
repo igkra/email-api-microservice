@@ -18,7 +18,6 @@ const auth = {
     domain: env.MAILGUN_DOMAIN
   }
 }
-
 const nodemailerMailgun = nodemailer.createTransport(mg(auth));
 
 //This is allowing the app to have access to my public folder
@@ -40,6 +39,7 @@ app.use(basicAuth({
 }))
 
 app.use(cors())
+app.options('*', cors()) // include before other routes
 
 app.listen(PORT);
 
